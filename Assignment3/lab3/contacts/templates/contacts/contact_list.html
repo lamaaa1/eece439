@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact List</title>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Contact Manager</h1>
+    </header>
+
+    <!-- Add New Contact Button -->
+    <div>
+        <a href="{% url 'contact_create' %}">Add New Contact</a>
+    </div>
+
+    <!-- Contact List -->
+    <section>
+        <ul>
+            {% if contacts %}
+                {% for contact in contacts %}
+                    <li>
+                        <div>
+                            <h3>{{ contact.name }}</h3>
+                            <p>Profession: {{ contact.profession }}</p>
+                            <p>Phone: {{ contact.tel_number }}</p>
+                            <p>Email: {{ contact.email_address }}</p>
+                            <p>Address: {{ contact.address }}</p>
+                        </div>
+
+                        <div>
+                            <a href="{% url 'contact_update' contact.pk %}">Edit</a>
+                            <a href="{% url 'contact_delete' contact.pk %}">Delete</a>
+                        </div>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <p>No contacts found.</p>
+            {% endif %}
+        </ul>
+    </section>
+
+   
+
+    <!-- Form Error Display (if any) -->
+    {% if form.errors %}
+        <ul>
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li>{{ field.label }}: {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+
+</html>
